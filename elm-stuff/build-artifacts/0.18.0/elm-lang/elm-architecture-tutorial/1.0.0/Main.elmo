@@ -1,0 +1,30 @@
+var _elm_lang$elm_architecture_tutorial$Main$items = {
+	ctor: '::',
+	_0: 'Green Eggs',
+	_1: {
+		ctor: '::',
+		_0: 'Green Ham',
+		_1: {ctor: '[]'}
+	}
+};
+var _elm_lang$elm_architecture_tutorial$Main$main = _elm_lang$virtual_dom$Native_VirtualDom.staticProgram(
+	A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h1,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Items'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(
+					_elm_lang$core$Basics$toString(_elm_lang$elm_architecture_tutorial$Main$items)),
+				_1: {ctor: '[]'}
+			}
+		}));
