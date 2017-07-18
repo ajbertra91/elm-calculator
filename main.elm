@@ -5,145 +5,9 @@ import Html exposing (beginnerProgram)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import String
-import List
+--import List
+--import String.Extra exposing (pluralize)
 
--- ------------------------------------
--- ------------------------------------
-
---politely : String -> String
---politely phrase =
---    "Excuse me, " ++ phrase
-
---ask : String -> String -> String
---ask thing place =
---    "is there a " ++ thing ++ " in the " ++ place ++ "?"
-
---askPolitelyAboutFish : String -> String
---askPolitelyAboutFish = politely << (ask "fish")
-
--- ------------------------------------
--- ------------------------------------
-
---type alias Dog =
---    { name : String
---    , age : Int
---    }
-
---dog =
---    { name = "Spock"
---    , age = 3
---    }
-
---renderDog : Dog -> String
---renderDog dog =
---    dog.name ++ ", " ++ (toString dog.age)
-
---main =
---    text <| renderDog dog
-
--- ------------------------------------
--- ------------------------------------
-
---type alias Person =
---    { name: String
---    , age : Int
---    }
-
---people =
---    [ { name = "Legolas", age = 2931 }
---    , { name = "Gimli", age = 139 }
---    ]
-
---findPerson : String -> List Person -> Maybe Person
---findPerson name peeps = List.foldl
---    (\peep memo ->
---        case memo of
---            Just _ ->
---                memo
---            Nothing ->
---                if peep.name == name then
---                    Just peep
---                else Nothing
---    )
---    Nothing
---    peeps
-
---names : List Person -> List String
---names peeps =
---    List.map (\peep -> peep.name) people
-
---main = text <| toString <| findPerson "bilbo"
---    people
-
--- ---------------------------------------------------------
--- Render HTML in the browser using the Html Module in Elm
--- ---------------------------------------------------------
-
---type alias Ship =
---    { name : String
---    , model : String
---    , cost : Int
---    }
-
---ships =
---    [ { name = "X-wing", cost = 149999 }
---    , { name = "Millenium Falcon", cost = 100000 }
---    , { name = "Death Star", cost = 100000000000 }
---    ]
-
---renderShip ship =
---    li [
---        style
---        [ ("background-color", "#cccccc")
---        , ("border-top", "1px #666666 solid")
---        , ("margin-bottom", "4px")
---        , ("padding", "10px")
---        ]
---    ]
---        [ text ship.name
---        , text ", "
---        , strong []
---            [ text <| toString ship.cost]
---        ]
-
---renderShips ships =
---    div [
---        style
---            [ ("font-family","Helvetica Neue, Arial, Sans-serif")
---            , ("font-weight", "100")
---            , ("padding", "1em")
---            ]
---        ]
---        [ h1 [] [text "Ships"]
---        , ol [] (List.map renderShip ships)
---    ]
-
---main =
---    renderShips ships
-
--- ----------------------------------------------
--- Reuse Functions Through Type Variables in Elm
--- ----------------------------------------------
-
---numbers =
---    [ 1,2,3,4,5 ]
-
---fruits =
---    [ { name = "Orange"}, { name = "Banana"} ]
-
---printThing : thing -> Html msg
---printThing thing =
---    ul [] [ text <| toString thing ]
-
-
---main =
---    ul [] (List.map printThing fruits)
-
--- ---------------------------------------------------
--- Create Apps Using the Elm Application Architecture
--- ---------------------------------------------------
-
--- Four Parts
 
 --model =
 --    { showFace = False }
@@ -172,40 +36,111 @@ import List
 --        , view = view
 --        }
 
--- --------------------------------------------------
--- Discover new Packages Using the Elm Package Index
--- package.elm-lang.org
--- --------------------------------------------------
+type alias Model =
+    { total : String
+    , input1 : String
+    , input2 : String
+    , opperand : String
+    }
 
-items =
-    [ "Green Eggs", "Green Ham"]
+model : Model
+model =
+    { total = "0"
+    , input1 = ""
+    , input2 = ""
+    , opperand = ""
+    }
 
-main =
-    div []
-        [ h1 [] [ text <| "Items" ]
-        , text <| toString <| items
+type Msg =
+    ShowTotal String
+    | StoreInput String
+    | Opperand String
+
+update : Msg -> Model -> Model
+update msg model_ =
+    case msg of
+        ShowTotal e ->
+            if (model_.opperand /= "") && (model_.input2 /= "") then
+                { model_ | total = "{{model_.input1 model_.opperand model_input2}}" }
+            else
+                { model_ | total = "0" }
+
+
+        StoreInput newInput ->
+            if model_.opperand == "" then
+                { model_ | input1 = model_.input1 ++ newInput }
+            else
+                { model_ | input2 = model_.input2 ++ newInput }
+
+        Opperand newOperator ->
+            { model_ | opperand = newOperator }
+
+css : String -> Html Msg
+css path =
+    node "link" [ rel "stylesheet", href path ] []
+
+calculatorStyles =
+    style
+        [ ("background-color", "#111")
+        , ("max-width", "400px")
         ]
 
+displayStyles =
+    style
+        [ ("line-height", "80px")
+        , ("color",       "#fff")
+        , ("text-align",  "right")
+        , ("padding",     "0 20px")
+        , ("font-size",   "32px")
+        , ("font-family", "Helvetica Neue, Arial, Sans-serif")
+        , ("font-weight", "100")
+        ]
 
+buttonStyles =
+    style
+        [ ("width",            "25%")
+        , ("line-height",      "40px")
+        , ("background-color", "#333")
+        , ("border",           "1px solid #999")
+        , ("color",            "#fff")
+        , ("font-size",        "26px")
+        , ("font-family",      "Helvetica Neue, Arial, Sans-serif")
+        , ("font-weight",      "100")
+        ]
 
+view : Model -> Html Msg
+view model_ =
+    div [ calculatorStyles ]
+        [ div [ displayStyles ] [text <| model_.total]
+        , div []
+            [ button [ value "1", buttonStyles ] [text "1"]
+            , button [ value "2", buttonStyles ] [text "2"]
+            , button [ value "3", buttonStyles ] [text "3"]
+            , button [ value "+", buttonStyles ] [text "+"]
+            ]
+        , div []
+            [ button [ value "4", buttonStyles ] [text "4"]
+            , button [ value "5", buttonStyles ] [text "5"]
+            , button [ value "6", buttonStyles ] [text "6"]
+            , button [ value "-", buttonStyles ] [text "-"]
+            ]
+        , div []
+            [ button [ value "7", buttonStyles ] [text "7"]
+            , button [ value "8", buttonStyles ] [text "8"]
+            , button [ value "9", buttonStyles ] [text "9"]
+            , button [ value "/", buttonStyles ] [text "/"]
+            ]
+        , div []
+            [ button [ value ".", buttonStyles ] [text "."]
+            , button [ value "0", buttonStyles ] [text "0"]
+            , button [ value "=", buttonStyles ] [text "="]
+            , button [ value "*", buttonStyles ] [text "*"]
+            ]
+        ]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+main =
+    beginnerProgram
+        { model = model
+        , update = update
+        , view = view
+        }

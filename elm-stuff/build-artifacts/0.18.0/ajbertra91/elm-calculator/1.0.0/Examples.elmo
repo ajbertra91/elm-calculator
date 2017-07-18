@@ -1,0 +1,68 @@
+var _ajbertra91$elm_calculator$Examples$update = F2(
+	function (msg, model_) {
+		var _p0 = msg;
+		return _elm_lang$core$Native_Utils.update(
+			model_,
+			{showTotal: 1});
+	});
+var _ajbertra91$elm_calculator$Examples$model = {showTotal: 0};
+var _ajbertra91$elm_calculator$Examples$ShowTotal = {ctor: 'ShowTotal'};
+var _ajbertra91$elm_calculator$Examples$view = function (model_) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'background-color', _1: '#999999'},
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(
+						_elm_lang$core$Basics$toString(_ajbertra91$elm_calculator$Examples$ShowTotal)),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$button,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(_ajbertra91$elm_calculator$Examples$ShowTotal),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('1'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$button,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Events$onClick(_ajbertra91$elm_calculator$Examples$ShowTotal),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('='),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
+var _ajbertra91$elm_calculator$Examples$main = _elm_lang$html$Html$beginnerProgram(
+	{model: _ajbertra91$elm_calculator$Examples$model, update: _ajbertra91$elm_calculator$Examples$update, view: _ajbertra91$elm_calculator$Examples$view})();
